@@ -1,7 +1,7 @@
 import type { Menu } from "@monorepo/types";
 
 // demo 用固定選單樹（DIR > MENU > BTN），供帳號選單、角色權限樹共用。
-// 對應到 renhospes-admin 的示範路由 /employees、/products，以及 system-settings 的帳號/角色管理。
+// 對應到 project-admin 的示範路由 /employees、/products，以及 system-settings 的帳號/角色管理。
 const TS = "2024-01-01T00:00:00.000Z";
 
 function btn(

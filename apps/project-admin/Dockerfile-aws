@@ -1,6 +1,6 @@
 # 這是 pnpm + turborepo monorepo，build context 必須是 repo 根目錄，例如：
-#   docker build -f apps/renhospes-admin/Dockerfile-aws -t vue-qiankun-monorepo .
-# 一次把 host（renhospes-admin）跟 qiankun 子應用（system-settings）都建置好，
+#   docker build -f apps/project-admin/Dockerfile-aws -t vue-qiankun-monorepo .
+# 一次把 host（project-admin）跟 qiankun 子應用（system-settings）都建置好，
 # 用同一個 nginx 服務，子應用放在 /system-settings/ 子路徑下。
 FROM node:20-alpine AS builder
 WORKDIR /repo
@@ -9,18 +9,18 @@ RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml turbo.json tsconfig.base.json ./
 COPY packages packages
-COPY apps/renhospes-admin/package.json apps/renhospes-admin/package.json
+COPY apps/project-admin/package.json apps/project-admin/package.json
 COPY apps/system-settings/package.json apps/system-settings/package.json
 
 RUN pnpm install --frozen-lockfile
 
-COPY apps/renhospes-admin apps/renhospes-admin
+COPY apps/project-admin apps/project-admin
 COPY apps/system-settings apps/system-settings
 
-RUN pnpm turbo run build --filter=renhospes-admin --filter=system-settings
+RUN pnpm turbo run build --filter=project-admin --filter=system-settings
 
 FROM nginx:alpine
-COPY --from=builder /repo/apps/renhospes-admin/dist /usr/share/nginx/html
+COPY --from=builder /repo/apps/project-admin/dist /usr/share/nginx/html
 COPY --from=builder /repo/apps/system-settings/dist /usr/share/nginx/html/system-settings
 
 RUN echo "server { \

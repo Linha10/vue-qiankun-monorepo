@@ -5,8 +5,8 @@ import { HcDialog, HcButton } from '@monorepo/ui-kit'
 import { useI18n } from '@monorepo/composables'
 
 // ⚠️ 依環境手動調整網址（ uat / prod） TODO: 後續可改成從環境變數讀取
-// const BASE_QR_CODE_URL = 'https://uat.renhospes.com/shop/artwork'
-const BASE_QR_CODE_URL_PROD = 'https://www.renhospes.com/shop/artwork'
+// const BASE_QR_CODE_URL = 'https://uat.example.com/shop/artwork'
+const BASE_QR_CODE_URL_PROD = 'https://www.example.com/shop/artwork'
 
 const props = defineProps<{
   modelValue: boolean

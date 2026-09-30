@@ -132,7 +132,7 @@ const handleLogout = () => {
           <Icon icon="solar:buildings-bold-duotone" width="20" />
         </div>
         <div v-if="!appStore.isSidebarCollapsed" class="sidebar-brand__info">
-          <p class="sidebar-brand__title">Renhospes Admin</p>
+          <p class="sidebar-brand__title">Project Admin</p>
           <p class="sidebar-brand__subtitle">Hotel Console</p>
         </div>
       </div>

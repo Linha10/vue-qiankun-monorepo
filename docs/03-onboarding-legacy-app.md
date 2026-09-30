@@ -1,6 +1,6 @@
 # 如何導入一個既有／舊專案（改造為 qiankun 子應用）
 
-適用情境：公司已經有一套獨立運作的舊系統（可能是 Vue2、Vue3 + Vite、甚至 Nuxt），要把它搬進這個 monorepo，改造成掛在 `renhospes-admin` 底下的 qiankun 子應用。
+適用情境：公司已經有一套独立運作的舊系統（可能是 Vue2、Vue3 + Vite、甚至 Nuxt），要把它搬進這個 monorepo，改造成掛在 `project-admin` 底下的 qiankun 子應用。
 
 跟「[全新專案](./02-onboarding-new-app.md)」最大的差異：舊專案通常已經有自己的一套攔截器、Layout、登入頁、i18n、權限邏輯，**不是全部重寫，而是評估哪些可以換成 workspace 共用套件、哪些保留舊專案自己的**。
 

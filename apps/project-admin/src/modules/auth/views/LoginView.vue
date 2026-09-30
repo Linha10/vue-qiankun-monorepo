@@ -70,7 +70,7 @@ async function handleLogin() {
     <div class="login-brand">
       <div class="login-brand__overlay" />
       <div class="login-brand__content">
-        <div class="login-brand__logo">RENHOSPES</div>
+        <div class="login-brand__logo">PROJECT</div>
         <h1 class="login-brand__title">{{ $t('auth.systemTitle') }}</h1>
         <p class="login-brand__subtitle">{{ $t('auth.loginTip') }}</p>
         <div class="login-brand__divider" />

@@ -4,7 +4,7 @@ import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
 import router from './router'
 import App from './App.vue'
 import { startMicroApps } from './qiankun'
-import { startRenhospesAdminMocks } from './mocks/browser'
+import { startProjectAdminMocks } from './mocks/browser'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 
@@ -55,7 +55,7 @@ app.runWithContext(() => {
 
 // 這是純前端 demo，沒有真實後端，所有 API（含登入）都由 MSW 攔截處理，
 // 必須在 mount 之前啟動，避免初始畫面打出的請求沒被攔截到。
-await startRenhospesAdminMocks()
+await startProjectAdminMocks()
 
 app.mount('#app')
 await router.isReady()

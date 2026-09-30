@@ -58,7 +58,7 @@ importers:
         specifier: ^2.1.0
         version: 2.2.12(typescript@5.9.3)
 
-  apps/renhospes-admin:
+  apps/project-admin:
     dependencies:
       '@faker-js/faker':
         specifier: ^9.3.0

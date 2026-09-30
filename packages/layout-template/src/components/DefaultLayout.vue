@@ -2,7 +2,7 @@
 // 預設共用 Layout：上方 Header + 左側 Menu + 主內容區
 // 各專案可直接使用，也可以只引用部分 slot 來客製，
 // 若需要完全不同的版型，直接在該專案內寫自己的 Layout 即可，不強制繼承此元件
-// TODO 此 Layout 尚未完成, 後續請基於renhospes-admin內的default layout 進行擴充
+// TODO 此 Layout 尚未完成, 後續請基於 project-admin內的default layout 進行擴充
 interface MenuItem {
   index: string;
   label: string;

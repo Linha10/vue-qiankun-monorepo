@@ -1,6 +1,6 @@
 # 如何導入一個全新專案（新建 qiankun 子應用）
 
-適用情境：要開一個全新的功能模組（例如「行銷活動管理」、「報表中心」），從頭建立，直接以 qiankun 子應用的形態接進 `renhospes-admin` 這個 host。
+適用情境：要開一個全新的功能模組（例如「行銷活動管理」、「報表中心」），從頭建立，直接以 qiankun 子應用的形態接進 `project-admin` 這個 host。
 
 以下步驟都以 `apps/system-settings` 作為範本，新專案取名叫 `<new-app>`（實際用你自己的名字取代）。
 
@@ -113,7 +113,7 @@ if (qiankunWindow.__POWERED_BY_QIANKUN__) {
 
 ### 7.1 註冊子應用
 
-在 [apps/renhospes-admin/src/micro/apps.config.ts](../apps/renhospes-admin/src/micro/apps.config.ts) 新增一筆：
+在 [apps/project-admin/src/micro/apps.config.ts](../apps/project-admin/src/micro/apps.config.ts) 新增一筆：
 
 ```ts
 {
@@ -141,7 +141,7 @@ if (qiankunWindow.__POWERED_BY_QIANKUN__) {
 
 ### 7.2 新增容器路由
 
-比照 [apps/renhospes-admin/src/views/SystemSettingsContainer.vue](../apps/renhospes-admin/src/views/SystemSettingsContainer.vue)，建立一個只有一個空 `<div id="<new-app>-container">` 的容器元件，並在 [apps/renhospes-admin/src/router/index.ts](../apps/renhospes-admin/src/router/index.ts) 加一筆容器路由：
+比照 [apps/project-admin/src/views/SystemSettingsContainer.vue](../apps/project-admin/src/views/SystemSettingsContainer.vue)，建立一個只有一個空 `<div id="<new-app>-container">` 的容器元件，並在 [apps/project-admin/src/router/index.ts](../apps/project-admin/src/router/index.ts) 加一筆容器路由：
 
 ```ts
 {
@@ -172,7 +172,7 @@ const menuCheckPath = to.path.startsWith(systemSettingsPrefix)
 ## 8. 開發期驗證
 
 1. `pnpm --filter <new-app> dev`：先確認子應用可以獨立跑起來（走 fallback 假資料）。
-2. `pnpm --filter renhospes-admin dev`：啟動 host，登入後點選單新項目，確認：
+2. `pnpm --filter project-admin dev`：啟動 host，登入後點選單新項目，確認：
    - Network 面板有從 `:8091` 抓到子應用的 entry HTML/JS
    - 對應的容器 `<div>` 裡出現子應用渲染的內容
    - Console 有 `[qiankun] before load / before mount` 的 log（host 端 `registerMicroApps` 的 hook）

@@ -4,7 +4,7 @@ import { reactive } from "vue";
 // 預設共用登入畫面：只負責畫面 + 表單資料，實際打 API 的邏輯交給外部
 // （呼叫方搭配 @monorepo/request 建立的 instance 自行處理），
 // 需要完全客製化登入畫面的專案，可以不引用此元件，自己刻一個即可
-// TODO 此登入介面尚未完成, 後續請基於 renhospes-admin 內的 login的layout 進行擴充
+// TODO 此登入介面尚未完成, 後續請基於 project-admin 內的 login的layout 進行擴充
 
 withDefaults(
   defineProps<{

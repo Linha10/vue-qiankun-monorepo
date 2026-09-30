@@ -12,7 +12,7 @@ export interface AccountRecord {
   loginIp: string;
 }
 
-// 固定的 demo 帳號 id，與 apps/renhospes-admin/src/api/permission.ts 的 admin 清單一致，
+// 固定的 demo 帳號 id，與 apps/project-admin/src/api/permission.ts 的 admin 清單一致，
 // 讓 demo 帳號登入後自動被判定為 admin，略過所有選單/按鈕權限檢查。
 export const DEMO_ACCOUNT_ID = "3f2abaa9-5cc2-441e-92a3-548a211b6482";
 
