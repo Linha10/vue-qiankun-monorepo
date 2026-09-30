@@ -401,6 +401,13 @@ importers:
         version: 5.9.3
 
   packages/mocks:
+    dependencies:
+      '@faker-js/faker':
+        specifier: ^9.3.0
+        version: 9.9.0
+      msw:
+        specifier: ^2.7.0
+        version: 2.15.0(@types/node@24.13.6)(typescript@5.9.3)
     devDependencies:
       typescript:
         specifier: ^5.5.0
