@@ -34,7 +34,9 @@ const DEPARTMENTS = ['工程部', '產品部', '設計部', '行銷部', '客服
         :placeholder="$t('employees.filter.all')"
         clearable
         style="width: 160px"
-        @update:model-value="(val: string | number | undefined) => emit('update:department', val as string | undefined)"
+        @update:model-value="
+          (val: string | number | undefined) => emit('update:department', val as string | undefined)
+        "
       >
         <el-option v-for="d in DEPARTMENTS" :key="d" :label="d" :value="d" />
       </HcSelect>
@@ -47,7 +49,9 @@ const DEPARTMENTS = ['工程部', '產品部', '設計部', '行銷部', '客服
         :placeholder="$t('employees.filter.all')"
         clearable
         style="width: 130px"
-        @update:model-value="(val: string | number | undefined) => emit('update:status', val as 0 | 1 | undefined)"
+        @update:model-value="
+          (val: string | number | undefined) => emit('update:status', val as 0 | 1 | undefined)
+        "
       >
         <el-option :label="$t('common.enable')" :value="1" />
         <el-option :label="$t('common.disable')" :value="0" />

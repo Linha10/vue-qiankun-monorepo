@@ -17,9 +17,7 @@ const loading = ref(false)
 
 const LOW_STOCK_THRESHOLD = 10
 
-const activeEmployeeCount = computed(
-  () => employees.value.filter(e => e.status === 1).length
-)
+const activeEmployeeCount = computed(() => employees.value.filter(e => e.status === 1).length)
 const lowStockCount = computed(
   () => products.value.filter(p => p.stock < LOW_STOCK_THRESHOLD).length
 )
@@ -49,10 +47,8 @@ async function fetchData() {
       employeeApi.getList({ page: 1, pageSize: 200 }),
       productApi.getList({ page: 1, pageSize: 200 }),
     ])
-    employees.value =
-      (empRes as { data: { list: EmployeeItem[] } })?.data?.list ?? []
-    products.value =
-      (prodRes as { data: { list: ProductItem[] } })?.data?.list ?? []
+    employees.value = (empRes as { data: { list: EmployeeItem[] } })?.data?.list ?? []
+    products.value = (prodRes as { data: { list: ProductItem[] } })?.data?.list ?? []
   } finally {
     loading.value = false
   }

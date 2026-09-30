@@ -104,7 +104,10 @@ function handleClose() {
   >
     <el-form label-position="top" class="tw-flex tw-flex-col tw-gap-2">
       <el-form-item :label="$t('products.form.name')" required>
-        <HcInput v-model="form.name" :placeholder="$t('form.pleaseFill', { field: $t('products.form.name') })" />
+        <HcInput
+          v-model="form.name"
+          :placeholder="$t('form.pleaseFill', { field: $t('products.form.name') })"
+        />
       </el-form-item>
       <el-form-item :label="$t('products.form.category')" required>
         <HcSelect v-model="form.category" style="width: 100%">

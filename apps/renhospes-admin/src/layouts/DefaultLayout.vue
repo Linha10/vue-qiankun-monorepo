@@ -155,7 +155,11 @@ const handleLogout = () => {
               <Icon v-if="item.icon" :icon="item.icon" class="sidebar-nav__icon" />
               <span>{{ item.titleKey ? $t(item.titleKey) : item.title }}</span>
             </template>
-            <el-menu-item v-for="child in visibleChildren(item)" :key="child.path" :index="child.path">
+            <el-menu-item
+              v-for="child in visibleChildren(item)"
+              :key="child.path"
+              :index="child.path"
+            >
               <template #title>{{ child.titleKey ? $t(child.titleKey) : child.title }}</template>
             </el-menu-item>
           </el-sub-menu>

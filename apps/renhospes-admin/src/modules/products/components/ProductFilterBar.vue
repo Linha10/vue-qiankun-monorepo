@@ -34,7 +34,9 @@ const CATEGORIES = ['3C配件', '居家生活', '辦公用品', '戶外休閒', 
         :placeholder="$t('products.filter.all')"
         clearable
         style="width: 160px"
-        @update:model-value="(val: string | number | undefined) => emit('update:category', val as string | undefined)"
+        @update:model-value="
+          (val: string | number | undefined) => emit('update:category', val as string | undefined)
+        "
       >
         <el-option v-for="c in CATEGORIES" :key="c" :label="c" :value="c" />
       </HcSelect>
@@ -47,7 +49,9 @@ const CATEGORIES = ['3C配件', '居家生活', '辦公用品', '戶外休閒', 
         :placeholder="$t('products.filter.all')"
         clearable
         style="width: 130px"
-        @update:model-value="(val: string | number | undefined) => emit('update:status', val as 0 | 1 | undefined)"
+        @update:model-value="
+          (val: string | number | undefined) => emit('update:status', val as 0 | 1 | undefined)
+        "
       >
         <el-option :label="$t('common.enable')" :value="1" />
         <el-option :label="$t('common.disable')" :value="0" />
@@ -55,7 +59,9 @@ const CATEGORIES = ['3C配件', '居家生活', '辦公用品', '戶外休閒', 
     </div>
 
     <div class="tw-flex tw-flex-col tw-gap-1">
-      <span class="tw-text-xs tw-text-slate-500">{{ $t('products.filter.searchPlaceholder') }}</span>
+      <span class="tw-text-xs tw-text-slate-500">{{
+        $t('products.filter.searchPlaceholder')
+      }}</span>
       <HcInput
         :model-value="props.search"
         :placeholder="$t('products.filter.searchPlaceholder')"

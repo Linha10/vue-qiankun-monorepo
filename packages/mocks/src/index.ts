@@ -1,1 +1,1 @@
-export * from './createMockDb'
+export * from "./createMockDb";
