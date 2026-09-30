@@ -1,0 +1,216 @@
+@use 'variables' as *;
+
+// ── 全域 CSS Custom Properties ──────────────────────────
+:root {
+  --color-primary:         #{$color-primary};
+  --color-primary-light:   #{$color-primary-light};
+  --color-primary-muted:   #{$color-primary-muted};
+  --color-primary-50:      #{$color-primary-50};
+  --color-primary-100:     #{$color-primary-100};
+  --color-primary-700:     #{$color-primary-700};
+  --color-primary-800:     #{$color-primary-800};
+  --color-primary-900:     #{$color-primary-900};
+
+  --color-secondary:       #{$color-secondary};
+  --color-secondary-light: #{$color-secondary-light};
+  --color-secondary-100:   #{$color-secondary-100};
+
+  --color-neutral-0:   #{$color-neutral-0};
+  --color-neutral-50:  #{$color-neutral-50};
+  --color-neutral-100: #{$color-neutral-100};
+  --color-neutral-200: #{$color-neutral-200};
+  --color-neutral-300: #{$color-neutral-300};
+  --color-neutral-400: #{$color-neutral-400};
+  --color-neutral-500: #{$color-neutral-500};
+  --color-neutral-600: #{$color-neutral-600};
+  --color-neutral-700: #{$color-neutral-700};
+  --color-neutral-800: #{$color-neutral-800};
+  --color-neutral-900: #{$color-neutral-900};
+
+  --color-success: #{$color-success};
+  --color-warning: #{$color-warning};
+  --color-danger:  #{$color-danger};
+  --color-info:    #{$color-info};
+
+  --color-bg-page:         #{$color-bg-page};
+  --color-bg-card:         #{$color-bg-card};
+  --color-text-primary:    #{$color-text-primary};
+  --color-text-secondary:  #{$color-text-secondary};
+  --color-text-muted:      #{$color-text-muted};
+  --color-text-inverse:    #{$color-text-inverse};
+  --color-border:          #{$color-border};
+  --color-border-subtle:   #{$color-border-subtle};
+
+  // Element Plus 主色覆蓋（含所有衍生狀態色，一次覆蓋全套，避免 hover/active/focus 仍用預設藍）
+  // 色值依 #0b6e7a 線性混白/混黑計算
+  --el-color-primary:        #{$color-primary};         // #0b6e7a
+  --el-color-primary-light-1: #237d87;  // tint 10%
+  --el-color-primary-light-2: #3c8b95;  // tint 20%
+  --el-color-primary-light-3: #549aa2;  // tint 30% — button hover bg
+  --el-color-primary-light-4: #6da8af;  // tint 40%
+  --el-color-primary-light-5: #85b7bd;  // tint 50%
+  --el-color-primary-light-6: #9dc5ca;  // tint 60%
+  --el-color-primary-light-7: #b6d4d7;  // tint 70%
+  --el-color-primary-light-8: #cee2e4;  // tint 80% — input hover border
+  --el-color-primary-light-9: #e7f1f2;  // tint 90% — disabled bg / focus fill
+  --el-color-primary-dark-2:  #095862;  // shade 20% — button active/pressed
+}
+
+// ── 全域 Base ────────────────────────────────────────────
+body {
+  background-color: $color-bg-page;
+  color: $color-text-primary;
+}
+
+// ── Element Plus El-Tag 狀態色覆蓋 ───────────────────────
+// 讓 warning tag 用 secondary gold，info tag 用 neutral
+.el-tag--warning {
+  --el-tag-bg-color: #{$color-secondary-light};
+  --el-tag-border-color: #{$color-secondary-200};
+  --el-tag-text-color: #{$color-secondary-700};
+}
+
+.el-tag--info {
+  --el-tag-bg-color: #{$color-neutral-100};
+  --el-tag-border-color: #{$color-neutral-200};
+  --el-tag-text-color: #{$color-neutral-600};
+}
+
+.el-tag--success {
+  --el-tag-bg-color: #dcfce7;
+  --el-tag-border-color: #bbf7d0;
+  --el-tag-text-color: #{$color-success};
+}
+
+.el-tag--danger {
+  --el-tag-bg-color: #fee2e2;
+  --el-tag-border-color: #fecaca;
+  --el-tag-text-color: #{$color-danger};
+}
+
+// ── Element Plus El-Radio 主題色覆蓋 ─────────────────────
+// El Plus radio 的 checked 狀態是 hardcoded selector 直接用 var(--el-color-primary)，
+// 不是透過元件層級 CSS 變數。以下用 SCSS 變數編譯成 hex 直接覆蓋，不依賴 CSS var 繼承。
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: $color-primary;
+  background: $color-primary;
+}
+
+.el-radio__input.is-checked + .el-radio__label {
+  color: $color-primary;
+}
+
+// hover 時的外框色（透過元件層級變數控制）
+.el-radio {
+  --el-radio-input-border-color-hover: #{$color-primary};
+}
+
+// el-radio-button（若未來使用）
+.el-radio-button {
+  --el-radio-button-checked-bg-color:           #{$color-primary};
+  --el-radio-button-checked-border-color:        #{$color-primary};
+  --el-radio-button-checked-text-color:          #{$color-neutral-0};
+  --el-radio-button-checked-border-color-hover:  #095862;
+}
+
+// ── HcMessageBox 全域主題樣式 ────────────────────────────
+.hc-message-box {
+  border-radius: 12px !important;
+
+  .el-message-box__header {
+    border-bottom: 1px solid $color-border-subtle;
+    padding-bottom: 12px;
+  }
+
+  .el-message-box__content {
+    margin-top: 12px;
+  }
+
+  .el-message-box__btns {
+    .el-button--primary,
+    .el-button--primary:not(.is-disabled):not(.is-plain) {
+      --el-button-bg-color: #{$color-primary};
+      --el-button-border-color: #{$color-primary};
+      --el-button-hover-bg-color: #{$color-primary-700};
+      --el-button-hover-border-color: #{$color-primary-700};
+      --el-button-active-bg-color: #{$color-primary-900};
+      --el-button-active-border-color: #{$color-primary-900};
+      background-color: $color-primary !important;
+      border-color: $color-primary !important;
+      color: $color-neutral-0 !important;
+
+      &:hover:not(.is-disabled) {
+        background-color: $color-primary-700 !important;
+        border-color: $color-primary-700 !important;
+      }
+
+      &:active:not(.is-disabled) {
+        background-color: $color-primary-900 !important;
+        border-color: $color-primary-900 !important;
+      }
+    }
+
+    // cancel 按鈕：hover 時套用主題色
+    .el-button:not(.el-button--primary):not(.el-button--danger) {
+      &:hover {
+        border-color: $color-primary;
+        color: $color-primary;
+        background-color: $color-primary-50;
+      }
+    }
+  }
+}
+
+// ── HcDialog：固定 Header/Footer，Body 獨立捲動，最高 700px ──────
+// el-dialog 透過 teleport 渲染至 document.body，需在全域樣式覆蓋
+.el-dialog {
+  display: flex !important;
+  flex-direction: column;
+  max-height: 700px !important;
+
+  &__header {
+    flex-shrink: 0;
+    border-bottom: 1px solid $color-border-subtle;
+  }
+
+  &__body {
+    flex: 1;
+    min-height: 0; // 讓 flex 子項可縮小，不撐破父容器
+    overflow-y: auto;
+
+    // ── 自訂捲軸樣式（Webkit：Chrome / Edge / Safari）──
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $color-neutral-100;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $color-neutral-300;
+      border-radius: 3px;
+
+      &:hover {
+        background: $color-primary-200;
+      }
+    }
+
+    // Firefox
+    scrollbar-width: thin;
+    scrollbar-color: $color-neutral-300 $color-neutral-100;
+  }
+
+  &__footer {
+    flex-shrink: 0;
+    border-top: 1px solid $color-border-subtle;
+  }
+}
+
+// ── HcIconPicker Popover ──────────────────────────────────
+.hc-icon-picker-popper {
+  .el-popover__title {
+    display: none;
+  }
+}

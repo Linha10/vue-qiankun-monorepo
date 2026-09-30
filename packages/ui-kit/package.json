@@ -1,0 +1,27 @@
+{
+  "name": "@monorepo/ui-kit",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "element-plus": "^2.7.0"
+  },
+  "dependencies": {
+    "@monorepo/composables": "workspace:*",
+    "@monorepo/types": "workspace:*",
+    "@monorepo/utils": "workspace:*",
+    "@iconify/vue": "^5.0.0",
+    "@tanstack/vue-query": "^5.99.2",
+    "@tiptap/extension-image": "^3.23.1",
+    "@tiptap/extension-link": "^3.23.1",
+    "@tiptap/extension-text-align": "^3.23.1",
+    "@tiptap/extension-text-style": "^3.23.1",
+    "@tiptap/extension-underline": "^3.23.1",
+    "@tiptap/starter-kit": "^3.23.1",
+    "@tiptap/vue-3": "^3.23.1",
+    "zod": "^4.3.6",
+    "tiptap-extension-resize-image": "^1.4.0"
+  }
+}

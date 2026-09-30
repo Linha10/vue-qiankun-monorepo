@@ -1,0 +1,18 @@
+{
+  "name": "@monorepo/mocks",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./browser": "./src/browser.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "msw": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@monorepo/layout-template",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "element-plus": "^2.7.0",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
