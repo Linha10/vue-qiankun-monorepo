@@ -197,7 +197,11 @@ async function handleLogin() {
   position: relative;
   display: none;
   flex: 1;
-  background: url('/hotel-bg.jpg') center / cover no-repeat;
+  // 用 Vite 的 @ alias 讓這張圖走正常的 asset pipeline（進 src/assets 而非 public/）：
+  // 這樣打包時會被處理成帶 hash 的檔名，並且自動套用正確的 base（含 GitHub Pages 的 repo 子路徑）。
+  // 直接寫 url('/hotel-bg.jpg') 這種指向 public/ 的絕對路徑，Vite 不會幫忙轉換 base，
+  // 部署到 GitHub Pages 這種非根路徑的環境時圖片會抓錯路徑。
+  background: url('@/assets/hotel-bg.jpg') center / cover no-repeat;
 }
 
 @media (min-width: 1024px) {

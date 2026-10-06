@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  GitHub Pages 是純靜態託管，沒有「所有未知路徑都導回 index.html」的 SPA fallback 機制。
+  使用者直接用瀏覽器開啟（或重新整理）像 /employees/emp-1 這種 vue-router 的深層路徑時，
+  GitHub Pages 找不到對應的實體檔案，就會回傳這個 404.html。
+
+  這個檔案把目前的路徑編碼進查詢字串，導回網站根目錄；index.html 的 <head> 裡有一段對應的
+  解碼 script，會在 vue-router 接手之前把網址列還原成原本的路徑，讓深層連結、重新整理都能正常運作。
+
+  pathSegmentsToKeep = 1：保留網址的第一段路徑（GitHub Pages 專案站台的 repo 名稱，
+  例如 /vue-qiankun-monorepo/）。如果之後改成自訂網域部署在根路徑，要改成 0。
+
+  來源：https://github.com/rafgraph/spa-github-pages
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>project-admin</title>
+    <script type="text/javascript">
+      var pathSegmentsToKeep = 1
+      var l = window.location
+      l.replace(
+        l.protocol +
+          '//' +
+          l.hostname +
+          (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') +
+          '/?/' +
+          l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash,
+      )
+    </script>
+  </head>
+  <body></body>
+</html>

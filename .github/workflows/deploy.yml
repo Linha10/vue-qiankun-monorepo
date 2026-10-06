@@ -1,0 +1,88 @@
+name: Deploy to GitHub Pages
+
+# 這是一個純前端 demo 專案（所有 API 都由 MSW 攔截，沒有真實後端），
+# 適合直接用 GitHub Pages 這種純靜態託管部署，不需要額外的伺服器。
+#
+# 部署邏輯：
+# 1. project-admin（host）build 成 GitHub Pages 站台的根目錄。
+# 2. system-settings（qiankun 子應用）build 成 /system-settings/ 子目錄，
+#    讓 host 的 apps.config.ts 可以用 `${BASE_URL}system-settings/` 這個相對路徑抓到它。
+# 3. 兩個 app 都要帶 GH_PAGES_BASE 這個環境變數建置，讓 vite 的 base 與
+#    系統內部的子應用 entry 網址都正確指向 GitHub Pages 的 repo 子路徑
+#    （例如 /vue-qiankun-monorepo/），而不是寫死根路徑 '/'。
+
+on:
+  push:
+    branches: [main]
+  # 允許在 GitHub Actions 頁面手動觸發，不用特地 push 一個空 commit 才能重新部署
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時間只跑一個部署，新的 push 進來就取消還在跑的舊部署
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 取得這次部署實際會用到的 base path（專案站台通常是 /<repo-name>/，
+      # 如果之後改用自訂網域或改成 user/org 根站台，這個 action 會自動算出空字串）
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build project-admin (host)
+        run: pnpm --filter project-admin build
+        env:
+          GH_PAGES_BASE: ${{ steps.pages.outputs.base_path }}/
+
+      - name: Build system-settings (qiankun micro app)
+        run: pnpm --filter system-settings build
+        env:
+          GH_PAGES_BASE: ${{ steps.pages.outputs.base_path }}/
+
+      # 把兩個 app 的 build 產物組成同一個站台：project-admin 在根目錄，
+      # system-settings 放在它底下的 system-settings/ 子目錄
+      - name: Assemble site
+        run: |
+          mkdir -p site
+          cp -r apps/project-admin/dist/. site/
+          mkdir -p site/system-settings
+          cp -r apps/system-settings/dist/. site/system-settings/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
