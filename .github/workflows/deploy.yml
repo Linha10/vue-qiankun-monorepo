@@ -47,10 +47,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # 取得這次部署實際會用到的 base path（專案站台通常是 /<repo-name>/，
-      # 如果之後改用自訂網域或改成 user/org 根站台，這個 action 會自動算出空字串）
+      # 如果之後改用自訂網域或改成 user/org 根站台，這個 action 會自動算出空字串）。
+      # enablement: true 讓這個 action 在 repo 還沒手動啟用過 Pages 時自己呼叫 API 啟用，
+      # 避免第一次跑 workflow 時因為 repo 設定裡還沒開 Pages 而噴
+      # 「Get Pages site failed / Not Found」。不過仍建議先到 repo 的
+      # Settings → Pages 把 Source 設成 GitHub Actions，啟用狀態更明確、不用賭 API 行為。
       - name: Configure GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Build project-admin (host)
         run: pnpm --filter project-admin build
