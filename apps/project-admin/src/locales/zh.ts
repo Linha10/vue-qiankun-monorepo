@@ -43,6 +43,7 @@ export const zh = {
     welcome: '歡迎回來',
     loginSubtip: '請登入您的管理帳號以繼續',
     tagline: '專業飯店後台管理平台',
+    demoHint: '展示用帳號：{account}　密碼：{password}',
   },
   messages: {
     deleteConfirm: '確定要刪除「{name}」嗎？此操作無法復原。',
@@ -656,6 +657,7 @@ export const zh = {
     },
     delete: {
       confirm: '確定要刪除角色「{name}」嗎？此操作無法復原。',
+      protectedAdmin: '系統保護角色，無法刪除',
     },
   },
   pricing: {
@@ -854,6 +856,7 @@ export const zh = {
     form: {
       createTitle: '新增員工',
       editTitle: '編輯員工',
+      sectionInfo: '基本資訊',
       name: '姓名',
       department: '部門',
       jobTitle: '職稱',
@@ -895,6 +898,7 @@ export const zh = {
     form: {
       createTitle: '新增商品',
       editTitle: '編輯商品',
+      sectionInfo: '基本資訊',
       name: '商品名稱',
       category: '分類',
       price: '價格',

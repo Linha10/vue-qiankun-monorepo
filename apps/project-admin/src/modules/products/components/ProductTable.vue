@@ -56,10 +56,10 @@ function asProduct(row: unknown) {
         <div class="tw-flex tw-gap-1">
           <el-tooltip :content="$t('common.edit')" placement="top">
             <HcButton
-              v-if="canPerformAction('/products', 'update')"
               text
               type="primary"
               size="small"
+              :disabled="!canPerformAction('/products', 'update')"
               @click="emit('edit', asProduct(scope))"
             >
               <i class="fa-solid fa-pen" />
@@ -67,10 +67,10 @@ function asProduct(row: unknown) {
           </el-tooltip>
           <el-tooltip :content="$t('common.delete')" placement="top">
             <HcButton
-              v-if="canPerformAction('/products', 'delete')"
               text
               type="danger"
               size="small"
+              :disabled="!canPerformAction('/products', 'delete')"
               @click="emit('delete', asProduct(scope))"
             >
               <i class="fa-solid fa-trash" />

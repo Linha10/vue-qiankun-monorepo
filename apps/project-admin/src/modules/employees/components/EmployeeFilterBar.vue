@@ -82,8 +82,8 @@ const DEPARTMENTS = ['工程部', '產品部', '設計部', '行銷部', '客服
       <HcButton plain @click="emit('reset')">{{ $t('employees.filter.reset') }}</HcButton>
       <HcButton type="primary" @click="emit('search')">{{ $t('common.search') }}</HcButton>
       <HcButton
-        v-if="canPerformAction('/employees', 'create')"
         type="primary"
+        :disabled="!canPerformAction('/employees', 'create')"
         @click="emit('create')"
       >
         {{ $t('employees.filter.create') }}

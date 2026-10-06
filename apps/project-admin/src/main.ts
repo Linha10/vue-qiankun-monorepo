@@ -29,6 +29,16 @@ const queryClient = new QueryClient({
 const app = createApp(App)
 
 app.use(createPinia())
+
+// 這是純前端 demo，沒有真實後端，所有 API（含登入）都由 MSW 攔截處理，
+// 必須在 app.use(router) 之前（而不是只在 app.mount 之前）就啟動並等待完成：
+// app.use(router) 當下就會把「初始導覽」排進 microtask queue，導覽守衛（beforeEach）
+// 觸發的 ensureSessionInitialized() 會馬上送出 API 請求；如果這時 MSW 還沒啟動完成
+// （worker.start() 需要跟 Service Worker 來回 postMessage，不是單一 microtask），
+// 這些請求就會沒被攔截、直接打到 Vite dev server 拿到 SPA fallback 的 index.html
+// （200 但不是合法 JSON），讓畫面在重新整理後跳出「發生錯誤，請稍後再試」。
+await startProjectAdminMocks()
+
 app.use(router)
 app.use(VueQueryPlugin, { queryClient })
 
@@ -52,10 +62,6 @@ app.runWithContext(() => {
     )
   )
 })
-
-// 這是純前端 demo，沒有真實後端，所有 API（含登入）都由 MSW 攔截處理，
-// 必須在 mount 之前啟動，避免初始畫面打出的請求沒被攔截到。
-await startProjectAdminMocks()
 
 app.mount('#app')
 await router.isReady()

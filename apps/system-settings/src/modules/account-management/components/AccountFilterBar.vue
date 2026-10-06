@@ -92,7 +92,7 @@ function onStatusChange(val: unknown) {
       }}</HcButton>
       <HcButton
         type="primary"
-        v-if="canPerformAction('/account-management', 'create')"
+        :disabled="!canPerformAction('/account-management', 'create')"
         @click="emit('create')"
       >
         <i class="fa-solid fa-plus tw-mr-1" />

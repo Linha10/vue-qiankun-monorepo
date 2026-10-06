@@ -103,21 +103,31 @@ function formatDateTime(val: string) {
           </el-tooltip>
           <el-tooltip :content="$t('common.edit')" placement="top">
             <HcButton
-              v-if="canPerformAction('/role-management', 'update')"
               text
               type="primary"
               size="small"
+              :disabled="!canPerformAction('/role-management', 'update')"
               @click="emit('edit', scope)"
             >
               <i class="fa-solid fa-pen" />
             </HcButton>
           </el-tooltip>
-          <el-tooltip :content="$t('common.delete')" placement="top">
+          <el-tooltip
+            :content="
+              scope.roleKey === 'admin'
+                ? $t('roleManagement.delete.protectedAdmin')
+                : $t('common.delete')
+            "
+            placement="top"
+          >
             <HcButton
-              v-if="canPerformAction('/role-management', 'delete')"
               text
               type="danger"
               size="small"
+              :disabled="
+                scope.roleKey === 'admin' ||
+                !canPerformAction('/role-management', 'delete')
+              "
               @click="emit('delete', scope)"
             >
               <i class="fa-solid fa-trash" />

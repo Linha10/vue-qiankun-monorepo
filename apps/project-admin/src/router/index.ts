@@ -124,7 +124,10 @@ router.beforeEach(async to => {
     const menuCheckPath = to.path.startsWith(systemSettingsPrefix)
       ? to.path.slice(systemSettingsPrefix.length) || null
       : to.path
-    if (menuCheckPath && !permission.canAccessMenu(menuCheckPath)) {
+    // 儀表板是登入後的通用首頁，不是選單權限樹裡的其中一項（menuTree 沒有對應節點），
+    // 一律放行，避免帳號被收回所有選單權限後連首頁都進不去
+    const isDashboard = to.name === 'Dashboard'
+    if (!isDashboard && menuCheckPath && !permission.canAccessMenu(menuCheckPath)) {
       return { name: 'Forbidden' }
     }
     const { crudAction, menuUrl } = to.meta

@@ -1,7 +1,12 @@
 import type { Menu } from "@monorepo/types";
 
-// demo 用固定選單樹（DIR > MENU > BTN），供帳號選單、角色權限樹共用。
+// demo 用固定選單樹，供帳號選單、角色權限樹共用。
 // 對應到 project-admin 的示範路由 /employees、/products，以及 system-settings 的帳號/角色管理。
+//
+// 權限設計原則：單一頁面的模組（員工管理、商品管理）本身就是 MENU，直接掛自己的 CRUD 按鈕，
+// 不另外包一層 DIR + 子選單；只有像「系統設定」這種底下真的有多個獨立子頁面（帳號管理 /
+// 操作紀錄 / 登入紀錄 / 角色管理）的情況，才需要 DIR（只控「檢視」）+ 多個 MENU（各自有
+// 自己的 CRUD）這種兩層結構。
 const TS = "2024-01-01T00:00:00.000Z";
 
 function btn(
@@ -37,42 +42,22 @@ export const menuTree: Menu[] = [
     parentId: null,
     title: "員工管理",
     menuName: "員工管理",
-    menuType: "DIR",
+    menuType: "MENU",
     action: "view",
     icon: "solar:users-group-rounded-bold-duotone",
     level: 1,
     parent: "",
     path: "/employees",
-    permission: "",
+    permission: "employees:view",
     sort: 1,
     status: 1,
-    url: "",
+    url: "/employees",
     updatedAt: TS,
     createdAt: TS,
     children: [
-      {
-        id: 101,
-        parentId: 100,
-        title: "員工列表",
-        menuName: "員工列表",
-        menuType: "MENU",
-        action: "view",
-        icon: "solar:user-id-bold-duotone",
-        level: 2,
-        parent: "員工管理",
-        path: "/employees",
-        permission: "employees:view",
-        sort: 1,
-        status: 1,
-        url: "/employees",
-        updatedAt: TS,
-        createdAt: TS,
-        children: [
-          btn(1011, 101, "新增", "create", 1),
-          btn(1012, 101, "編輯", "update", 2),
-          btn(1013, 101, "刪除", "delete", 3),
-        ],
-      },
+      btn(1011, 100, "新增", "create", 1),
+      btn(1012, 100, "編輯", "update", 2),
+      btn(1013, 100, "刪除", "delete", 3),
     ],
   },
   {
@@ -80,42 +65,22 @@ export const menuTree: Menu[] = [
     parentId: null,
     title: "商品管理",
     menuName: "商品管理",
-    menuType: "DIR",
+    menuType: "MENU",
     action: "view",
     icon: "solar:box-bold-duotone",
     level: 1,
     parent: "",
     path: "/products",
-    permission: "",
+    permission: "products:view",
     sort: 2,
     status: 1,
-    url: "",
+    url: "/products",
     updatedAt: TS,
     createdAt: TS,
     children: [
-      {
-        id: 201,
-        parentId: 200,
-        title: "產品列表",
-        menuName: "產品列表",
-        menuType: "MENU",
-        action: "view",
-        icon: "solar:bag-bold-duotone",
-        level: 2,
-        parent: "商品管理",
-        path: "/products",
-        permission: "products:view",
-        sort: 1,
-        status: 1,
-        url: "/products",
-        updatedAt: TS,
-        createdAt: TS,
-        children: [
-          btn(2011, 201, "新增", "create", 1),
-          btn(2012, 201, "編輯", "update", 2),
-          btn(2013, 201, "刪除", "delete", 3),
-        ],
-      },
+      btn(2011, 200, "新增", "create", 1),
+      btn(2012, 200, "編輯", "update", 2),
+      btn(2013, 200, "刪除", "delete", 3),
     ],
   },
   {

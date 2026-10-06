@@ -82,8 +82,8 @@ const CATEGORIES = ['3C配件', '居家生活', '辦公用品', '戶外休閒', 
       <HcButton plain @click="emit('reset')">{{ $t('products.filter.reset') }}</HcButton>
       <HcButton type="primary" @click="emit('search')">{{ $t('common.search') }}</HcButton>
       <HcButton
-        v-if="canPerformAction('/products', 'create')"
         type="primary"
+        :disabled="!canPerformAction('/products', 'create')"
         @click="emit('create')"
       >
         {{ $t('products.filter.create') }}

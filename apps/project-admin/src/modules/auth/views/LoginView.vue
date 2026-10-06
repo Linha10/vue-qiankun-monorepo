@@ -2,6 +2,8 @@
 import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { ArrowDown, Refresh } from '@element-plus/icons-vue'
+import { Icon } from '@iconify/vue'
 import { useI18n } from '@monorepo/composables'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
@@ -84,7 +86,7 @@ async function handleLogin() {
         <!-- 語系切換 -->
         <el-dropdown class="locale-dropdown" trigger="click" @command="setLocale">
           <div class="locale-trigger">
-            <el-icon><Translate /></el-icon>
+            <el-icon><Icon icon="mdi:translate" /></el-icon>
             <span>{{ appStore.locale === 'zh' ? '中文' : 'English' }}</span>
             <el-icon class="tw-text-xs"><ArrowDown /></el-icon>
           </div>
@@ -108,6 +110,10 @@ async function handleLogin() {
 
         <h2 class="login-form-wrap__heading">{{ $t('auth.welcome') }}</h2>
         <p class="login-form-wrap__sub">{{ $t('auth.loginSubtip') }}</p>
+
+        <div class="demo-hint">
+          {{ $t('auth.demoHint', { account: 'demo', password: 'demo123' }) }}
+        </div>
 
         <el-form
           ref="formRef"
@@ -310,7 +316,17 @@ async function handleLogin() {
 .login-form-wrap__sub {
   font-size: 0.9rem;
   color: #9a8070;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.demo-hint {
+  font-size: 0.8125rem;
+  color: #8b4513;
+  background: rgba(192, 112, 48, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.25);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  margin-bottom: 1.5rem;
 }
 
 /* ── Element Plus 表單客製化 ─────────────────── */

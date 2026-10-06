@@ -76,7 +76,7 @@ const statusOptions = computed(() => [
       <HcButton
         type="primary"
         plain
-        v-if="canPerformAction('/role-management', 'create')"
+        :disabled="!canPerformAction('/role-management', 'create')"
         @click="emit('create')"
       >
         {{ $t("roleManagement.filter.create") }}

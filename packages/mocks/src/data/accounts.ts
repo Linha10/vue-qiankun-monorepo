@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { createMockDb } from "../createMockDb";
+import { DEMO_ROLE_ID } from "./roles";
 
 export interface AccountRecord {
   id: string;
@@ -12,8 +13,9 @@ export interface AccountRecord {
   loginIp: string;
 }
 
-// 固定的 demo 帳號 id，與 apps/project-admin/src/api/permission.ts 的 admin 清單一致，
-// 讓 demo 帳號登入後自動被判定為 admin，略過所有選單/按鈕權限檢查。
+// 固定的 demo 帳號 id，前端畫面與各處 mock 資料都用這個 id 關聯 demo 帳號。
+// demo 帳號的權限改以「Demo」角色驅動（見下面的 accountRoleAssignments），
+// 不再寫死放進 admin 白名單略過檢查，詳見 apps/project-admin/src/api/permission.ts 的註解。
 export const DEMO_ACCOUNT_ID = "3f2abaa9-5cc2-441e-92a3-548a211b6482";
 
 function buildSeed(): AccountRecord[] {
@@ -47,7 +49,11 @@ export const accountsDb = createMockDb<AccountRecord>(buildSeed(), {
   matchFields: ["status"],
 });
 
-// accountId -> 已指派的角色 id 清單
+// accountId -> 已指派的角色 id 清單。
+// demo 帳號指派「Demo」角色（見 ./roles.ts 的 DEMO_ROLE_ID），而不是系統管理員，
+// 這樣使用者才能透過角色管理調整 Demo 角色的權限，實際體驗 demo 帳號被擋頁面 /
+// create-update-delete 按鈕被 disable 的效果（見 apps/project-admin 的
+// api/permission.ts：demo 帳號已不在寫死的 admin 白名單內，改吃這份角色權限資料）。
 export const accountRoleAssignments = new Map<string, number[]>([
-  [DEMO_ACCOUNT_ID, [1]],
+  [DEMO_ACCOUNT_ID, [Number(DEMO_ROLE_ID)]],
 ]);

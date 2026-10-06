@@ -181,7 +181,7 @@ const columns = computed<TableColumn[]>(() => [
               text
               type="primary"
               size="small"
-              v-if="canPerformAction('/account-management', 'update')"
+              :disabled="!canPerformAction('/account-management', 'update')"
               @click="emit('edit', scope)"
             >
               <i class="fa-solid fa-pen" />
@@ -192,7 +192,7 @@ const columns = computed<TableColumn[]>(() => [
               text
               type="danger"
               size="small"
-              v-if="canPerformAction('/account-management', 'delete')"
+              :disabled="!canPerformAction('/account-management', 'delete')"
               @click="emit('delete', scope)"
             >
               <i class="fa-solid fa-trash" />

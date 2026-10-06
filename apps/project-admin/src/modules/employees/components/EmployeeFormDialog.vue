@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from '@monorepo/composables'
-import { HcDialog, HcInput, HcSelect } from '@monorepo/ui-kit'
+import { HcDialog, HcInput, HcSelect, HcSwitch } from '@monorepo/ui-kit'
 import { employeeApi, type EmployeeItem } from '@/api/employees'
 
 const props = defineProps<{
@@ -45,10 +46,28 @@ const defaultForm = (): FormData => ({
 })
 
 const form = reactive<FormData>(defaultForm())
+const formRef = ref<FormInstance>()
+
+const rules = computed<FormRules>(() => ({
+  name: [
+    {
+      required: true,
+      message: $t('form.pleaseFill', { field: $t('employees.form.name') }),
+      trigger: 'blur',
+    },
+  ],
+  department: [
+    {
+      required: true,
+      message: $t('form.pleaseSelect', { field: $t('employees.form.department') }),
+      trigger: 'change',
+    },
+  ],
+}))
 
 watch(
   () => props.modelValue,
-  open => {
+  async open => {
     if (!open) return
     if (props.mode === 'edit' && props.employee) {
       Object.assign(form, {
@@ -62,14 +81,15 @@ watch(
     } else {
       Object.assign(form, defaultForm())
     }
+    await nextTick()
+    formRef.value?.clearValidate()
   }
 )
 
 async function handleSubmit() {
-  if (!form.name || !form.department) {
-    ElMessage.warning($t('form.checkRequired'))
-    return
-  }
+  const valid = await formRef.value?.validate().catch(() => false)
+  if (!valid) return
+
   isSaving.value = true
   try {
     if (props.mode === 'create') {
@@ -101,52 +121,93 @@ function handleClose() {
     :model-value="modelValue"
     :title="dialogTitle"
     :loading="isSaving"
-    width="520px"
+    width="600px"
     :confirm-text="$t('button.save')"
     :cancel-text="$t('button.cancel')"
     @update:model-value="emit('update:modelValue', $event)"
     @confirm="handleSubmit"
     @cancel="handleClose"
   >
-    <el-form label-position="top" class="tw-flex tw-flex-col tw-gap-2">
-      <el-form-item :label="$t('employees.form.name')" required>
-        <HcInput
-          v-model="form.name"
-          :placeholder="$t('form.pleaseFill', { field: $t('employees.form.name') })"
-        />
-      </el-form-item>
-      <el-row :gutter="16">
-        <el-col :span="12">
-          <el-form-item :label="$t('employees.form.department')" required>
-            <HcSelect v-model="form.department" style="width: 100%">
-              <el-option v-for="d in DEPARTMENTS" :key="d" :label="d" :value="d" />
-            </HcSelect>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="$t('employees.form.jobTitle')">
-            <HcInput v-model="form.title" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="16">
-        <el-col :span="12">
-          <el-form-item :label="$t('employees.form.email')">
-            <HcInput v-model="form.email" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="$t('employees.form.phone')">
-            <HcInput v-model="form.phone" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-form-item :label="$t('employees.form.status')">
-        <el-radio-group v-model="form.status">
-          <el-radio :value="1">{{ $t('common.enable') }}</el-radio>
-          <el-radio :value="0">{{ $t('common.disable') }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
+    <el-form
+      ref="formRef"
+      :model="form"
+      :rules="rules"
+      label-position="top"
+      class="tw-flex tw-flex-col tw-gap-4 tw-pt-2"
+    >
+      <!-- ── Section：基本資訊 ─────────────────────────────── -->
+      <div class="form-section">
+        <div class="form-section__header">
+          <i class="fa-solid fa-id-card form-section__icon" />
+          <span>{{ $t('employees.form.sectionInfo') }}</span>
+        </div>
+
+        <el-row :gutter="16">
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.name')" prop="name">
+              <HcInput
+                v-model="form.name"
+                :placeholder="$t('form.pleaseFill', { field: $t('employees.form.name') })"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.department')" prop="department">
+              <HcSelect v-model="form.department" style="width: 100%">
+                <el-option v-for="d in DEPARTMENTS" :key="d" :label="d" :value="d" />
+              </HcSelect>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.jobTitle')">
+              <HcInput v-model="form.title" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.status')">
+              <HcSwitch v-model="form.status" :active-value="1 as 1" :inactive-value="0 as 0" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.email')">
+              <HcInput v-model="form.email" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('employees.form.phone')">
+              <HcInput v-model="form.phone" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
     </el-form>
   </HcDialog>
 </template>
+
+<style scoped lang="scss">
+@use '@/styles/variables' as *;
+
+.form-section {
+  border: 1px solid $color-neutral-200;
+  border-radius: 8px;
+  padding: 16px;
+  background: $color-neutral-0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $color-neutral-700;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $color-neutral-100;
+  }
+
+  &__icon {
+    color: $color-primary;
+    font-size: 15px;
+  }
+}
+</style>

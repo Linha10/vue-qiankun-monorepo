@@ -67,10 +67,10 @@ function asEmployee(row: unknown) {
           </el-tooltip>
           <el-tooltip :content="$t('common.edit')" placement="top">
             <HcButton
-              v-if="canPerformAction('/employees', 'update')"
               text
               type="primary"
               size="small"
+              :disabled="!canPerformAction('/employees', 'update')"
               @click="emit('edit', asEmployee(scope))"
             >
               <i class="fa-solid fa-pen" />
@@ -78,10 +78,10 @@ function asEmployee(row: unknown) {
           </el-tooltip>
           <el-tooltip :content="$t('common.delete')" placement="top">
             <HcButton
-              v-if="canPerformAction('/employees', 'delete')"
               text
               type="danger"
               size="small"
+              :disabled="!canPerformAction('/employees', 'delete')"
               @click="emit('delete', asEmployee(scope))"
             >
               <i class="fa-solid fa-trash" />

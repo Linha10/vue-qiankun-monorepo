@@ -43,6 +43,7 @@ export const en = {
     welcome: 'Welcome Back',
     loginSubtip: 'Please sign in to your admin account',
     tagline: 'Professional Hotel Management Platform',
+    demoHint: 'Demo account: {account}　Password: {password}',
   },
   messages: {
     deleteConfirm: 'Are you sure you want to delete "{name}"? This action cannot be undone.',
@@ -641,6 +642,7 @@ export const en = {
     },
     delete: {
       confirm: 'Are you sure you want to delete role "{name}"? This cannot be undone.',
+      protectedAdmin: 'Protected system role, cannot be deleted',
     },
   },
   button: {
@@ -860,6 +862,7 @@ export const en = {
     form: {
       createTitle: 'Add Employee',
       editTitle: 'Edit Employee',
+      sectionInfo: 'Basic Information',
       name: 'Name',
       department: 'Department',
       jobTitle: 'Job Title',
@@ -901,6 +904,7 @@ export const en = {
     form: {
       createTitle: 'Add Product',
       editTitle: 'Edit Product',
+      sectionInfo: 'Basic Information',
       name: 'Name',
       category: 'Category',
       price: 'Price',
